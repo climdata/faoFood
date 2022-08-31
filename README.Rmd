@@ -93,10 +93,8 @@ rollingGLM <- function(data, wid) {
 }  
 
 #reg <- roll_regres(meat ~ ts, data, width = 12, do_compute=c('sigmas', '1_step_forecasts')) 
-
-xx <- reg$coefs
-
-xx['ts']
+#xx <- reg$coefs
+#xx['ts']
 
 mil12 <- rollingGLM(food,24)
 
@@ -106,7 +104,7 @@ mil12 <- rollingGLM(food,24)
 
 ## Plot Relative Food Index
 
-```{r plot, echo=TRUE}
+```{r plot2, echo=TRUE}
 require("ggplot2")
 food2 <- mil12
 mp <- ggplot() +
