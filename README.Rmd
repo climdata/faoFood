@@ -21,10 +21,9 @@ Download the food price data from FAO (monthly)
 
 ```{sh downloads}
 echo $(pwd)
-cd ./sh & ./foaFood.sh
+#cd ./sh & ./foaFood.sh
+/cre/R/sh/foaFood.sh
 #./sh/foaFood.sh
-cd ..
-
 ```
 
 
