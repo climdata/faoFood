@@ -19,25 +19,16 @@ Download the food price data from FAO (monthly)
 
 
 ```sh
-
-./sh/foaFood.sh
+echo $(pwd)
+cd ./sh & ./foaFood.sh
+#./sh/foaFood.sh
+cd ..
 
 ```
 
 ```
-## PWD: /__w/faoFood/faoFood
-## match: '_aug580'
-## Try to download: https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_aug580.csv
-## --2022-08-31 09:59:37--  https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_aug580.csv
-## Resolving www.fao.org (www.fao.org)... 172.64.147.129, 104.18.40.127, 2606:4700:4400::6812:287f, ...
-## Connecting to www.fao.org (www.fao.org)|172.64.147.129|:443... connected.
-## HTTP request sent, awaiting response... 200 OK
-## Length: 43280 (42K) [text/csv]
-## Saving to: ‘../download/Food_price_indices_data_aug580.csv’
-## 
-##      0K .......... .......... .......... .......... ..        100% 64.2M=0.001s
-## 
-## 2022-08-31 09:59:38 (64.2 MB/s) - ‘../download/Food_price_indices_data_aug580.csv’ saved [43280/43280]
+## /__w/faoFood/faoFood
+## sh: 2: ./foaFood.sh: not found
 ```
 
 
@@ -62,6 +53,8 @@ write.table(food, file = "./csv/monthly_abs_food_index.csv", append = FALSE, quo
             eol = "\n", na = "NA", dec = ".", row.names = FALSE,
             col.names = TRUE, qmethod = "escape", fileEncoding = "UTF-8")
 ```
+
+
 ## Plot Absolute Food Index
 
 
@@ -87,6 +80,59 @@ mp
 ```
 
 ![](README_files/figure-html/plot-1.png)<!-- -->
+
+
+
+```r
+#install.packages("rollRegres")
+library(rollRegres)
+
+# data <- food
+# wid <- 24
+
+rollingGLM <- function(data, wid) {
+  py4 <-  data
+  reg <- roll_regres(Meat ~ ts, data, width = wid, do_compute=c('sigmas', '1_step_forecasts')) 
+  #reg <- roll_regres(temperature ~ year, py4, width = wid, do_compute=c('sigmas'))
+  lapply(reg, tail)
+  py4$ind <- (py4$Meat - reg$one_step_forecasts)/reg$sigmas  
+  py4$ind <- signif(py4$ind, digits=6)
+  #py4$ind2 <- (py4$temperature - py4$year*reg$coefs[,2]+reg$coefs[,1])/reg$sigmas
+  
+  py4 <-tail(py4, n=-wid)
+  return(py4) 
+}  
+
+#reg <- roll_regres(meat ~ ts, data, width = 12, do_compute=c('sigmas', '1_step_forecasts')) 
+#xx <- reg$coefs
+#xx['ts']
+
+mil12 <- rollingGLM(food,24)
+```
+
+
+
+## Plot Relative Food Index
+
+
+```r
+require("ggplot2")
+food2 <- mil12
+mp <- ggplot() +
+      #geom_line(aes(y=food$Food.Price.Index, x=food$ts), color="black") +
+      geom_line(aes(y=food2$Meat, x=food2$ts), color="yellow") +
+      geom_line(aes(y=food2$ind, x=food2$ts), color="red") +
+      #geom_line(aes(y=food$Dairy, x=food$ts), color="blue") +
+      #geom_line(aes(y=food$Cereals, x=food$ts), color="cyan") +  
+      #geom_line(aes(y=food$Oil, x=food$ts), color="yellow") +  
+      #geom_line(aes(y=food$Sugar, x=food$ts), color="green") +  
+      xlab("Year") + ylab("[]")
+mp
+```
+
+![](README_files/figure-html/plot2-1.png)<!-- -->
+
+
 
 
 
