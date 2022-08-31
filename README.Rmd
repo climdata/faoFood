@@ -20,8 +20,10 @@ Download the food price data from FAO (monthly)
 # https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_may629.csv
 
 ```{sh downloads}
-
-./sh/foaFood.sh
+echo $(pwd)
+cd ./sh & ./foaFood.sh
+#./sh/foaFood.sh
+cd ..
 
 ```
 
@@ -46,7 +48,12 @@ write.table(food, file = "./csv/monthly_abs_food_index.csv", append = FALSE, quo
             eol = "\n", na = "NA", dec = ".", row.names = FALSE,
             col.names = TRUE, qmethod = "escape", fileEncoding = "UTF-8")
 
+
+
+
 ```
+
+
 ## Plot Absolute Food Index
 
 ```{r plot, echo=TRUE}
@@ -62,6 +69,59 @@ mp <- ggplot() +
       xlab("Year") + ylab("[]")
 mp
 ```
+
+
+```{r relative}
+
+#install.packages("rollRegres")
+library(rollRegres)
+
+# data <- food
+# wid <- 24
+
+rollingGLM <- function(data, wid) {
+  py4 <-  data
+  reg <- roll_regres(Meat ~ ts, data, width = wid, do_compute=c('sigmas', '1_step_forecasts')) 
+  #reg <- roll_regres(temperature ~ year, py4, width = wid, do_compute=c('sigmas'))
+  lapply(reg, tail)
+  py4$ind <- (py4$Meat - reg$one_step_forecasts)/reg$sigmas  
+  py4$ind <- signif(py4$ind, digits=6)
+  #py4$ind2 <- (py4$temperature - py4$year*reg$coefs[,2]+reg$coefs[,1])/reg$sigmas
+  
+  py4 <-tail(py4, n=-wid)
+  return(py4) 
+}  
+
+#reg <- roll_regres(meat ~ ts, data, width = 12, do_compute=c('sigmas', '1_step_forecasts')) 
+
+xx <- reg$coefs
+
+xx['ts']
+
+mil12 <- rollingGLM(food,24)
+
+```
+
+
+
+## Plot Relative Food Index
+
+```{r plot, echo=TRUE}
+require("ggplot2")
+food2 <- mil12
+mp <- ggplot() +
+      #geom_line(aes(y=food$Food.Price.Index, x=food$ts), color="black") +
+      geom_line(aes(y=food2$Meat, x=food2$ts), color="yellow") +
+      geom_line(aes(y=food2$ind, x=food2$ts), color="red") +
+      #geom_line(aes(y=food$Dairy, x=food$ts), color="blue") +
+      #geom_line(aes(y=food$Cereals, x=food$ts), color="cyan") +  
+      #geom_line(aes(y=food$Oil, x=food$ts), color="yellow") +  
+      #geom_line(aes(y=food$Sugar, x=food$ts), color="green") +  
+      xlab("Year") + ylab("[]")
+mp
+```
+
+
 
 
 
