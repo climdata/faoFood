@@ -36,6 +36,8 @@ jobs:
         run: (R -e "install.packages('RcppArmadillo')")
       - name: Install rollRegres
         run: (R -e "install.packages('rollRegres')")
+      - name: Run cd 
+        run: (cd /cre/R/)
       - name: Run knitr
         run: (R -e "rmarkdown::render('/cre/R/README.Rmd')")
       - name: Submit changes       
