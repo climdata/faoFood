@@ -2,6 +2,11 @@
 
 # extract current csv url first
 echo "PWD: $(pwd)"
+touch plain1.txt
+touch ./download/plain2.txt
+touch ../download/plain3.txt
+
+
 [ -f ../download/index.html ] && mv -f ../download/index.html ../download/index.html.bck
 wget -q -P ../download https://www.fao.org/worldfoodsituation/foodpricesindex/en/
 grep "CSV" ../download/index.html | grep "Food_price_indices_data" > ../download/index.txt
