@@ -25,6 +25,6 @@ services:
 # sudo  docker-compose --file dc-rstat.yml up -d
 # sudo docker exec img /cre/scripts/all.sh
 # sudo chmod 777 -R ./volumes/data
-# R -e "install.packages('rmarkdown')"
-# R -e "rmarkdown::render('/cre/R/README.Rmd')"
+# [sudo docker exec rstat] R -e "install.packages('rmarkdown')"
+# [sudo docker exec rstat] R -e "rmarkdown::render('/cre/R/README.Rmd')"
 

@@ -2,6 +2,7 @@
 
 # extract current csv url first
 echo "PWD: $(pwd)"
+cd "/cre/R/sh"
 touch plain1.txt
 touch ./download/plain2.txt
 touch ../download/plain3.txt

@@ -32,7 +32,7 @@ jobs:
 ##        run: (R -e "install.packages('rmarkdown')")
       - name: Install gfortran
         run: (apt-get -y --no-install-recommends install gfortran liblapack-dev libopenblas-dev) 
-      - name: Install rollRegres
+      - name: Install RcppArmadillo
         run: (R -e "install.packages('RcppArmadillo')")
       - name: Install rollRegres
         run: (R -e "install.packages('rollRegres')")
