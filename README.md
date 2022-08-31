@@ -25,8 +25,8 @@ Download the food price data from FAO (monthly)
 ```
 
 ```
-## match: '_may629'
-## Try to download: https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_may629.csv
+## match: '_aug580'
+## Try to download: https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_aug580.csv
 ```
 
 
@@ -51,11 +51,7 @@ write.table(food, file = "./csv/monthly_abs_food_index.csv", append = FALSE, quo
             eol = "\n", na = "NA", dec = ".", row.names = FALSE,
             col.names = TRUE, qmethod = "escape", fileEncoding = "UTF-8")
 ```
-
-
-
-
-## Plot Food Index
+## Plot Absolute Food Index
 
 
 ```r
