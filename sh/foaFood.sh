@@ -1,12 +1,8 @@
 #!/bin/bash
 
 # extract current csv url first
-echo "PWD: $(pwd)"
+olddir="$pwd"
 cd "/cre/R/sh"
-touch plain1.txt
-touch ./download/plain2.txt
-touch ../download/plain3.txt
-
 
 [ -f ../download/index.html ] && mv -f ../download/index.html ../download/index.html.bck
 wget -q -P ../download https://www.fao.org/worldfoodsituation/foodpricesindex/en/
@@ -27,3 +23,5 @@ if [[ $ancor =~ (Food_price_indices_data)([^.csv]*) ]]; then
 else
   echo "no csv download file found"
 fi
+
+cd $olddir
