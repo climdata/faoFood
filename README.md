@@ -27,20 +27,18 @@ echo $(pwd)
 
 ```
 ## /__w/faoFood/faoFood
-## PWD: /__w/faoFood/faoFood
-## touch: cannot touch './download/plain2.txt': No such file or directory
 ## match: '_aug580'
 ## Try to download: https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_aug580.csv
-## --2022-08-31 12:08:10--  https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_aug580.csv
+## --2022-08-31 12:16:12--  https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_aug580.csv
 ## Resolving www.fao.org (www.fao.org)... 172.64.147.129, 104.18.40.127, 2606:4700:4400::ac40:9381, ...
 ## Connecting to www.fao.org (www.fao.org)|172.64.147.129|:443... connected.
 ## HTTP request sent, awaiting response... 200 OK
 ## Length: 43280 (42K) [text/csv]
 ## Saving to: ‘../download/Food_price_indices_data_aug580.csv’
 ## 
-##      0K .......... .......... .......... .......... ..        100% 16.4M=0.003s
+##      0K .......... .......... .......... .......... ..        100% 63.1M=0.001s
 ## 
-## 2022-08-31 12:08:10 (16.4 MB/s) - ‘../download/Food_price_indices_data_aug580.csv’ saved [43280/43280]
+## 2022-08-31 12:16:12 (63.1 MB/s) - ‘../download/Food_price_indices_data_aug580.csv’ saved [43280/43280]
 ```
 
 
